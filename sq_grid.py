@@ -28,7 +28,7 @@ class SquareGrid:
                 col.append(Cell(i, j, self.colour))
             self.cells.append(col)
 
-    def generate_walls(self, number_of_walls, goal_pos, player_pos):
+    def generate_walls(self, number_of_walls, goal_pos, player_pos=Vector2(0,0)):
         for i in range(number_of_walls):
             random_pos = self.random_pos()
             while not self.is_valid_pos(random_pos) or random_pos == goal_pos or random_pos == player_pos:
@@ -43,6 +43,13 @@ class SquareGrid:
                 if cell is not None:
                     cell.colour = self.colour
                     cell.parent_pos = None
+
+    def draw_trail(self, screen, pos):
+        p2 = []
+        coords = self.pos_to_coords(pos)
+        coords -= self.size/2
+        dimensions = Rect(coords.x, coords.y, self.size.x, self.size.y)
+        draw.rect(screen, Color('orange'), dimensions)
 
 
     def pos_to_coords(self, pos):
