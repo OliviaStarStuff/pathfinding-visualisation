@@ -1,9 +1,6 @@
 # Example file showing a circle moving on screen
 import pygame as pg
-import pygame.gfxdraw as pgx
 from grid import HexGrid
-from player import Player, Goal
-from agents import RandomAgent, AStar
 from gameController import GameController
 
 # pg setup

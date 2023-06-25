@@ -1,8 +1,6 @@
 # Example file showing a circle moving on screen
 import pygame as pg
 from sq_grid import SquareGrid
-from player import Player, Goal
-from agents import AStar
 from gameController import GameController
 
 # pg setup
