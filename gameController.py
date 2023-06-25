@@ -141,15 +141,15 @@ class GameController:
             self.lastTime[pg.MOUSEBUTTONDOWN] = pg.time.get_ticks()
             vector = pg.Vector2(pg.mouse.get_pos())
             mouse_pos = self.grid.coords_to_pos(vector)
-            if pg.mouse.get_pressed()[0]:
+            if pg.mouse.get_pressed()[0] and self.grid.is_valid_pos(mouse_pos):
                 if self.grid.get_cell(mouse_pos) is not None:
                     self.grid.clear_cell(mouse_pos)
                 else:
                     self.grid.new_cell(mouse_pos)
-            elif self.grid.is_valid_pos(mouse_pos) and pg.mouse.get_pressed()[1]:
+            elif pg.mouse.get_pressed()[1]:
                 self.player.pos = mouse_pos
                 self.agent.reset_open()
-            elif self.grid.is_valid_pos(mouse_pos) and pg.mouse.get_pressed()[2]:
+            elif pg.mouse.get_pressed()[2]:
                 self.goal.pos = mouse_pos
                 self.agent.reset_open()
 
