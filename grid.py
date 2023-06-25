@@ -148,7 +148,7 @@ class HexGrid:
                             neighbours.append(pos + Vector3(i, j, k))
         return neighbours
 
-    def generate_walls(self, number_of_walls, goal_pos, player_pos):
+    def generate_walls(self, number_of_walls, goal_pos, player_pos=Vector2(0,0)):
         for i in range(number_of_walls):
             random_pos = self.random_pos()
             while not self.is_valid_pos(random_pos) and random_pos != goal_pos and random_pos != player_pos:
@@ -184,6 +184,12 @@ class HexGrid:
         distance.x /= self.size.x
         distance.y /= self.size.y
         return distance.magnitude_squared()
+
+    def draw_trail(self, screen, pos):
+        p2 = []
+        for p in self.get_points():
+            p2.append(p + self.pos_to_coords(pos))
+        gfxdraw.filled_polygon(screen, p2, Color('orange'))
 
 def main() -> None:
     from pygame import time, event, QUIT

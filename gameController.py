@@ -14,6 +14,7 @@ class GameController:
                          pg.K_b:0, pg.K_r:0, pg.K_t:0, pg.K_f:0, pg.K_g: 0,
                          pg.K_v: 0, pg.MOUSEBUTTONDOWN: 0, pg.K_c:0, pg.K_x:0}
         self.grid = grid
+        grid.generate_walls(wall_num, goal_pos)
 
         # create game objects
         self.goal = Goal(screen, goal_pos, pg.Color("blue"))

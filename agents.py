@@ -15,6 +15,7 @@ class Agent(ABC):
         self.goal = goal
         self.grid = grid
         self.selected = selected
+        self.trail = 0
 
         self.reset()
 
@@ -47,9 +48,25 @@ class Agent(ABC):
         else:
             self.player.pos = self.grid.coords_to_pos(self.player.trail[0])
 
+    def get_efficiency(self):
+        efficiency = 0
+        if len(self.closed) > 0:
+            efficiency = self.trail_counter/len(self.closed)
+        if len(self.path) > 0:
+            efficiency = len(self.path)/len(self.closed)
+        return efficiency
+
+    def draw_current_trail(self, screen):
+        current = self.current
+        self.trail_counter = 1
+        while current is not None and self.has_goal is not True:
+            self.grid.draw_trail(screen, current.pos)
+            current = current.parent
+            self.trail_counter += 1
+
+    @abstractmethod
     def draw(self):
-        self.player.draw()
-        self.goal.draw()
+        pass
 
     @abstractmethod
     def get_neighbours(self):
@@ -130,15 +147,7 @@ class Node:
             return self.global_cost < other.global_cost
         return self.estimated_cost < other.estimated_cost
 
-class InformedAgent(Agent, ABC):
-    def __init__(self, player: Player, goal: Goal, grid: HexGrid, selected) -> None:
-        super().__init__(player, goal, grid, selected)
-
-    @abstractmethod
-    def estimate_remaining_cost(self, pos_1: Vector2, pos_2: Vector2):
-        pass
-
-class AStar(InformedAgent):
+class AStar(Agent):
     def __init__(self, player, goal: Goal, grid, selected) -> None:
         super().__init__(player, goal, grid, selected)
 
@@ -239,3 +248,4 @@ class AStar(InformedAgent):
             self.active = False
             return False
         return True
+
