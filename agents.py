@@ -169,12 +169,9 @@ class AStar(Agent):
                 if adjacent in opened_positions:
                     # get node
                     for node in self.open.queue:
-                        if node.pos == adjacent:
-                            old_node = node
-                    if old_node.global_cost > global_cost:
-                        old_node.update_costs(
+                        if node.pos == adjacent and node.global_cost > global_cost:
+                            node.update_costs(
                             self.current, global_cost, estimated_remaining_cost)
-                    self.grid.set_highlight(old_node.pos)
                 else:
                     node = Node(adjacent, self.current, global_cost, estimated_remaining_cost, self.priority_index, self.selected)
                     self.priority_index += 1

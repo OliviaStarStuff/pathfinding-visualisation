@@ -31,8 +31,9 @@ class Player(GameObject):
                         "white", (lerp_float-0.7)/0.3)
                 draw.line(screen, colour, self.trail[i],
                           self.trail[i+1], 4)
-    def reset_trail(self, coords) -> None:
-        self.trail = [coords.copy()]
+
+    def reset_trail(self, coords: Vector2) -> None:
+        self.trail: list[Vector2] = [coords.copy()]
 
 
 class Goal(GameObject):
