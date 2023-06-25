@@ -10,7 +10,6 @@ Showcases 4 pathfinding algorithms in a visual manner,
 this program uses the following libraries
 
 1. pygame 2.5.0
-2. numpy==1.25.0
 
 ### Setup
 `pip install -r requirements.txt`
