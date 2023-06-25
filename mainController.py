@@ -47,14 +47,13 @@ c:show graph overlap x:run step by step (press s)"
 
     def write_algorithm_title(self, controller):
         text = self.font.render(controller.agent.selected.upper(), 1, (255, 0, 0))
-        self.screen.blit(text,  pg.Vector2(self.TEXT_LEFT_ANCHOR+200, 20))
+        self.screen.blit(text,  pg.Vector2(controller.grid.center.x-text.get_width()/2, 10))
 
     def draw_statistics(self, controller):
         self.write_iteration_counter(controller)
         self.write_efficiency_value(controller)
         self.write_goal_position(controller)
         self.write_current_node(controller)
-        self.write_algorithm_title(controller)
         self.write_open_list(controller)
 
     def draw_axes(self, controller):
@@ -109,6 +108,7 @@ c:show graph overlap x:run step by step (press s)"
 
         for controller in self.controllers:
             controller.update(self.screen, dt)
+            self.write_algorithm_title(controller)
             self.write_cell_values(controller)
             if self.is_draw_ui:
                 self.draw_UI(controller)
