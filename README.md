@@ -1,4 +1,5 @@
-# Pathfinding visualization
+# Pathfinding visualisation
+![image of the app showing bfs](image.png)
 Showcases 4 pathfinding algorithms in a visual manner,
 * BFS
 * DFS
