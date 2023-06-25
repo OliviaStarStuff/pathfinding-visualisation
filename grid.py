@@ -1,7 +1,5 @@
-import numpy as np
-
-from math import cos,sin, pi
-from pygame import Color, draw, Vector2, display, math, gfxdraw, Vector3, font
+from math import cos, pi
+from pygame import Color, draw, Vector2, display, gfxdraw, Vector3, font
 from random import randint
 
 class Hex:
@@ -148,7 +146,7 @@ class HexGrid:
                             neighbours.append(pos + Vector3(i, j, k))
         return neighbours
 
-    def generate_walls(self, number_of_walls, goal_pos, player_pos=Vector2(0,0)):
+    def generate_walls(self, number_of_walls, goal_pos, player_pos=Vector3(0,0,0)):
         for i in range(number_of_walls):
             random_pos = self.random_pos()
             while not self.is_valid_pos(random_pos) and random_pos != goal_pos and random_pos != player_pos:
