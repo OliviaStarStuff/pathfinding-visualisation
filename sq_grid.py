@@ -136,7 +136,7 @@ class SquareGrid:
         return neighbours
 
     def estimate_remaining_cost(self, pos_1: Vector2, pos_2: Vector2):
-        distance: Vector2 = self.pos_to_coords(pos_1) - self.pos_to_coords(pos_2)
+        distance: Vector2 = pos_1 - pos_2
         return abs(distance.x)+abs(distance.y)
         distance.x /= self.size.x
         distance.y /= self.size.y
@@ -154,7 +154,6 @@ def main():
     grid = SquareGrid(Vector2(10, 10), CENTER, size=Vector2(40,40))
     player_pos = grid.random_pos()
     player = Player(screen, player_pos, grid.pos_to_coords(player_pos), Color('red'))
-
 
     clock = time.Clock()
     running = True

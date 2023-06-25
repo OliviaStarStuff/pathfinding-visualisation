@@ -8,12 +8,13 @@ r:regen positions v:regen map g:restart b:randomise positions"
 c:show graph overlap x:run step by step (press s)"
     TEXT_LEFT_ANCHOR = 20
 
-    def __init__(self, screen, font, controllers):
+    def __init__(self, screen, font, controllers, is_draw_ui=True):
         self.screen = screen
         self.CENTER = pg.Vector2(screen.get_size()) / 2
         player_pos = self.CENTER.copy()
         self.controllers = controllers
         self.font = font
+        self.is_draw_ui = is_draw_ui
 
     def write_iteration_counter(self, controller):
         text = self.font.render(f"iterations: {controller.agent.iteration}", 1, (255, 0, 0))
@@ -43,10 +44,6 @@ c:show graph overlap x:run step by step (press s)"
                 f"{str(node.pos):<14} {node.priority:>8} {node.total_cost:>11}",
                 1, (255, 0, 0))
             self.screen.blit(text, pg.Vector2(self.TEXT_LEFT_ANCHOR, 100+i*20))
-            text = self.font.render(f"{node.estimated_cost:.0f}", 1, (255, 255, 255))
-            self.screen.blit(text,
-                        controller.grid.pos_to_coords(node.pos)
-                        - pg.Vector2(text.get_width()//2-1,text.get_height()//2-2))
 
     def write_algorithm_title(self, controller):
         text = self.font.render(controller.agent.selected.upper(), 1, (255, 0, 0))
@@ -94,6 +91,15 @@ c:show graph overlap x:run step by step (press s)"
                         self.CENTER
                         + pg.Vector2(-text.get_width()/2, self.CENTER.y-26))
 
+    def write_cell_values(self, controller):
+        for node in controller.agent.open.queue:
+            text = self.font.render(
+                f"{node.global_cost:.0f}", 1, (255, 255, 255))
+            coords = controller.grid.pos_to_coords(node.pos)
+            coords -= pg.Vector2(text.get_width()//2-1,text.get_height()//2-2)
+
+            self.screen.blit(text, coords)
+
     def draw_UI(self, controller):
         self.draw_statistics(controller)
         self.write_open_list(controller)
@@ -103,7 +109,9 @@ c:show graph overlap x:run step by step (press s)"
 
         for controller in self.controllers:
             controller.update(self.screen, dt)
-            self.draw_UI(controller)
+            self.write_cell_values(controller)
+            if self.is_draw_ui:
+                self.draw_UI(controller)
             controller.agent.draw_current_trail(self.screen)
 
         self.write_controls()
