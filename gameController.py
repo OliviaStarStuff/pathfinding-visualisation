@@ -113,12 +113,12 @@ class GameController:
 
         if keys[pg.K_a] and pg.time.get_ticks() > self.interval + self.lastTime[pg.K_a]:
             self.lastTime[pg.K_a] = pg.time.get_ticks()
-            self.wall_num -= pg.math.clamp(50, 0, self.grid.get_size() * 8 // 10)
+            self.wall_num = int(pg.math.clamp(self.wall_num-50, 0, self.grid.get_size() * 8 / 10))
             self.regenerate_map()
 
         if keys[pg.K_d] and pg.time.get_ticks() > self.interval + self.lastTime[pg.K_d]:
             self.lastTime[pg.K_d] = pg.time.get_ticks()
-            self.wall_num += pg.math.clamp(50,0, self.grid.get_size() * 8 // 10)
+            self.wall_num = int(pg.math.clamp(self.wall_num+50,0, (self.grid.get_size() * 8) / 10))
             self.regenerate_map()
 
         if keys[pg.K_f] and pg.time.get_ticks() > self.interval + self.lastTime[pg.K_f]:
