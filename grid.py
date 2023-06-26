@@ -55,8 +55,8 @@ class Grid(ABC):
         else:
             print("not valid", pos)
 
-    # def set_parent(self, pos, parent_pos):
-    #     self.get_cell(pos).parent_pos = parent_pos
+    def set_parent(self, pos, parent_pos):
+        self.get_cell(pos).parent_pos = parent_pos
 
     def copy(self):
         cells = []
