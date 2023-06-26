@@ -76,10 +76,6 @@ class Agent(ABC):
     def update(self) -> None:
         pass
 
-    @abstractmethod
-    def estimate_remaining_cost(self) -> None:
-        return 0
-
 
 class RandomAgent(Agent):
     def __init__(self, player: Player, goal: Goal, grid: HexGrid) -> None:
@@ -114,10 +110,9 @@ class Node:
                         "bestFirst2":self.bestFirst2}
         self.selected = selected
 
-    def update_costs(self, parent: Node, global_cost: float, estimated_cost: float):
+    def update_costs(self, parent: Node, global_cost: float):
         self.global_cost = global_cost
-        self.total_cost = global_cost + estimated_cost
-        self.estimated_cost = estimated_cost
+        self.total_cost = global_cost + self.estimated_cost
         self.parent = parent
 
     def __lt__(self, other):
@@ -159,38 +154,28 @@ class AStar(Agent):
         adjacents = self.grid.get_neighbours(self.current.pos)
 
         closed_positions = [c.pos for c in self.closed]
-        opened_positions = [o.pos for o in self.open.queue]
+        opened_positions = dict()
+        for o in self.open.queue:
+            opened_positions[tuple(o.pos)] = o
 
         for adjacent in adjacents:
             global_cost = self.current.global_cost + self.grid.estimate_remaining_cost(adjacent, self.current.pos)
             if adjacent not in closed_positions:
-                estimated_remaining_cost = self.grid.estimate_remaining_cost(self.goal.pos, adjacent)
 
-                if adjacent in opened_positions:
+
+                if tuple(adjacent) in opened_positions.keys():
                     # get node
-                    for node in self.open.queue:
-                        if node.pos == adjacent and node.global_cost > global_cost:
-                            node.update_costs(
-                            self.current, global_cost, estimated_remaining_cost)
+                    old_node = opened_positions[tuple(adjacent)]
+                    if old_node.global_cost > global_cost:
+                        old_node.update_costs(
+                        self.current, global_cost)
                 else:
+                    estimated_remaining_cost = self.grid.estimate_remaining_cost(self.goal.pos, adjacent)
                     node = Node(adjacent, self.current, global_cost, estimated_remaining_cost, self.priority_index, self.selected)
                     self.priority_index += 1
                     self.open.put(node)
                     self.grid.set_highlight(adjacent)
                     self.grid.set_parent(adjacent, self.current.pos)
-
-    def estimate_remaining_cost(self, pos_1: Vector2, pos_2: Vector2):
-        # d_pos = pos_1 - pos_2
-        # distance = 0
-        # for i in d_pos[:]:
-        #     if i > 0:
-        #         distance += i
-        # return distance
-        distance: Vector2 = self.grid.pos_to_coords(pos_1) - self.grid.pos_to_coords(pos_2)
-        return abs(distance.x)+abs(distance.y)
-        distance.x /= self.grid.size.x
-        distance.y /= self.grid.size.y
-        return distance.magnitude_squared()
 
     def update(self):
         if not self.active:
