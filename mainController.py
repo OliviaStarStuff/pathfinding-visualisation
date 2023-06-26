@@ -11,7 +11,6 @@ c:show graph overlap x:run step by step (press s)"
     def __init__(self, screen, font, controllers, is_draw_ui=True):
         self.screen = screen
         self.CENTER = pg.Vector2(screen.get_size()) / 2
-        player_pos = self.CENTER.copy()
         self.controllers = controllers
         self.font = font
         self.is_draw_ui = is_draw_ui
