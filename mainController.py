@@ -45,7 +45,11 @@ c:show graph overlap x:run step by step (press s)"
             self.screen.blit(text, pg.Vector2(self.TEXT_LEFT_ANCHOR, 100+i*20))
 
     def write_algorithm_title(self, controller):
-        text = self.font.render(controller.agent.selected.upper(), 1, (255, 0, 0))
+        title = controller.agent.selected.upper()
+        global_cost = 0
+        if controller.agent.current is not None:
+            global_cost = controller.agent.current.global_cost
+        text = self.font.render(f"{title} ({global_cost:.0f})", 1, (255, 0, 0))
         self.screen.blit(text,  pg.Vector2(controller.grid.center.x-text.get_width()/2, 10))
 
     def draw_statistics(self, controller):

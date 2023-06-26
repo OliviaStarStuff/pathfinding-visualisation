@@ -18,7 +18,7 @@ grid = HexGrid(dimensions, grid_pos, size=size)
 # create walls
 goal_pos = grid.random_pos()
 wall_num = int(grid.get_size()*0.2)
-controller = GameController(screen, grid, goal_pos, "bfs",
+controller = GameController(screen, grid, goal_pos, "bestFirst",
                             is_random_start=True, change_agent_type=False,
                             wait_time=2500, wall_num=wall_num)
 
