@@ -7,8 +7,13 @@ class Cell(Vector2):
         self.colour = colour
         self.parent_pos = parent_pos
         self.size = size
-    def __copy__(self):
-        return Cell((self.x, self.y), self.size, self.colour)
+
+    def copy_cell(self):
+        return Cell(self, self.size, self.colour)
+
+    # def __copy__(self):
+        # return Cell((self.x, self.y), self.size, self.colour)
+
 
     @staticmethod
     def make_cell(i, j, size, colour):
@@ -66,7 +71,7 @@ class SquareGrid(Grid):
         if self.overlay:
             for col in self.cells:
                 for cell in col:
-                    if cell is not None and cell.parent_pos is not None and cell.colour != Color(168,0,168):
+                    if cell is not None and cell.parent_pos is not None:
                         start_pos = self.pos_to_coords(cell)
                         end_pos = self.pos_to_coords(cell.parent_pos)
                         draw.line(screen, (255, 255, 255), start_pos, end_pos)

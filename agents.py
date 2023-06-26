@@ -169,6 +169,7 @@ class AStar(Agent):
                     if old_node.global_cost > global_cost:
                         old_node.update_costs(
                         self.current, global_cost)
+                        self.grid.set_parent(adjacent, self.current.pos)
                 else:
                     estimated_remaining_cost = self.grid.estimate_remaining_cost(self.goal.pos, adjacent)
                     node = Node(adjacent, self.current, global_cost, estimated_remaining_cost, self.priority_index, self.selected)

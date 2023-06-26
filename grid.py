@@ -64,7 +64,7 @@ class Grid(ABC):
             new_cell_row = []
             for cell in cell_row:
                 if cell is not None:
-                    new_cell_row.append(cell.copy())
+                    new_cell_row.append(cell.copy_cell())
                 else:
                     new_cell_row.append(None)
             cells.append(new_cell_row)
@@ -120,7 +120,7 @@ class Hex(Vector3):
         self.parent_pos = parent_pos
         self.size = size
 
-    def __copy__(self):
+    def copy_cell(self):
         return Hex((self.x, self.y, self.z), self.size, self.colour)
 
     @staticmethod
