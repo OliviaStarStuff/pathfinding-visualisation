@@ -261,6 +261,20 @@ class HexGrid(Grid):
             return pos
         return pos + direction
 
+    def draw_axes(self, screen, font):
+        for i in range(int(self.cell_num.x)):
+            text = font.render(f"{i}", 1, (255, 0, 0))
+            pos = self.start_pos.copy()
+            pos.x += i * self.size.x * 1.5 - text.get_width()/2 + 1
+            pos.y -= self.size.x * (2 - i % 2)
+            screen.blit(text, pos)
+
+        for i in range(int(self.cell_num.y)):
+            text = font.render(f"{i:>2}", 1, (255, 0, 0))
+            pos = self.start_pos.copy()
+            pos.x -= self.size.x * 2 + text.get_width()/2 + 1
+            pos.y += self.size.y * 2 * i - text.get_height()/2 + 1
+            screen.blit(text, pos)
 
 def main() -> None:
     from pygame import time, event, QUIT

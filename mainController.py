@@ -101,7 +101,7 @@ c:show graph overlap x:run step by step (press s)"
     def draw_UI(self, controller):
         self.draw_statistics(controller)
         self.write_open_list(controller)
-        self.draw_axes(controller)
+        controller.grid.draw_axes(self.screen, self.font)
 
     def update(self, dt):
 

@@ -77,6 +77,22 @@ class SquareGrid(Grid):
         dimensions = Rect(coords.x, coords.y, self.size.x, self.size.y)
         draw.rect(screen, Color('orange'), dimensions)
 
+    def draw_axes(self, screen, font):
+
+        for i in range(int(self.cell_num.x)):
+            pos = self.start_pos.copy()
+            pos.y -= self.size.y
+            text = font.render(f"{i}", 1, (255, 0, 0))
+            pos.x += i * self.size.x - text.get_width()/2 + 1
+            screen.blit(text, pos)
+
+
+        for i in range(int(self.cell_num.y)):
+            text = font.render(f"{i:>2}", 1, (255, 0, 0))
+            pos = self.start_pos.copy()
+            pos.x -= self.size.x + text.get_width()/2 + 1
+            pos.y += self.size.y * i - text.get_height()/2 + 1
+            screen.blit(text, pos)
 
 def main():
     from pygame import time, event, QUIT, display, font
