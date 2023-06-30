@@ -39,7 +39,7 @@ class Agent(ABC):
         self.open: PriorityQueue[Node] = PriorityQueue()
         estimated_cost = self.grid.estimate_remaining_cost(
             self.goal.pos, self.player.pos)
-        self.open.put(Node(self.player.pos, None, 0, estimated_cost, 0, self.selected))
+        self.open.put(Node(self.player.pos, None, 0, estimated_cost, 0, 5, self.selected))
 
     def randomise_start_and_end(self, is_random) -> None:
         if is_random:
@@ -96,7 +96,7 @@ class RandomAgent(Agent):
 class Node:
     def __init__(self, pos: math._GenericVector,  parent: Node,
                  global_cost: float, estimated_cost: float=0,
-                 priority: int=0, selected: str="astar") -> None:
+                 priority: int=0, limit=0, selected: str="astar") -> None:
         self.pos = pos
         self.parent = parent
 
@@ -107,8 +107,15 @@ class Node:
         self.priority = priority
         self.options = {"dfs": self.dfs, "bfs": self.bfs,
                         "astar": self.astar, "bestFirst": self.bestFirst,
-                        "bestFirst2":self.bestFirst2}
+                        "iterative":self.iterative_deepning}
         self.selected = selected
+        self.limit = limit
+        if self.parent is not None:
+            if (self.limit < self.parent.limit):
+                self.limit = self.parent.limit
+            if (self.global_cost > self.parent.limit):
+                self.limit += limit
+
 
     def update_costs(self, parent: Node, global_cost: float):
         self.global_cost = global_cost
@@ -137,10 +144,17 @@ class Node:
             # return self.global_cost > other.global_cost
         return self.estimated_cost < other.estimated_cost
 
-    def bestFirst2(self, other):
-        if self.estimated_cost == other.estimated_cost:
-            return self.global_cost < other.global_cost
-        return self.estimated_cost < other.estimated_cost
+    def iterative_deepning(self, other):
+
+        if self.limit != other.limit:
+            # return self.priority < other.priority
+            return self.limit < other.limit
+        return self.priority > other.priority
+
+
+
+
+
 
 class AStar(Agent):
     def __init__(self, player, goal: Goal, grid, selected) -> None:
@@ -172,7 +186,9 @@ class AStar(Agent):
                         self.grid.set_parent(adjacent, self.current.pos)
                 else:
                     estimated_remaining_cost = self.grid.estimate_remaining_cost(self.goal.pos, adjacent)
-                    node = Node(adjacent, self.current, global_cost, estimated_remaining_cost, self.priority_index, self.selected)
+                    node = Node(adjacent, self.current, global_cost,
+                                estimated_remaining_cost, self.priority_index,
+                                10, self.selected)
                     self.priority_index += 1
                     self.open.put(node)
                     self.grid.set_highlight(adjacent)

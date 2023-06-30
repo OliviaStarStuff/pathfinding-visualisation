@@ -4,7 +4,8 @@ Showcases 4 pathfinding algorithms in a visual manner,
 * BFS
 * DFS
 * Best First
-* Depth First
+* A Star
+* Iterative Deepening DFS/BFS
 
 ## Setup and Installation
 this program uses the following libraries
@@ -15,7 +16,7 @@ this program uses the following libraries
 `pip install -r requirements.txt`
 
 ### Installation
-1. and then either `python app.py
+1. and then either `python app.py`
 
 ## Running the code
 There are four different programs
@@ -57,5 +58,5 @@ All clicks must be done on a grid cell
 5. Include option to switch heuristic from straight line distance to manhattan distance
 6. Include iterative deepening pathfinding algorithm
 7. Rekey keyboard controls to make more sense
-8. Include keyboard controls and status of toggles in GUI
+8. status of toggles in GUI
 9. Create clickable buttons for all keyboard options

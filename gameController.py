@@ -26,7 +26,7 @@ class GameController:
         self.wall_num=wall_num
         self.is_regenerate = is_regenerate
         self.is_random_start = is_random_start
-        self.choices = ["bfs", "dfs", "bestFirst", "astar"]
+        self.choices = ["bfs", "dfs", "bestFirst", "astar", "iterative"]
         self.choice = self.choices.index(agent_type)
         self.wait_timer = 0
         self.wait_time = wait_time
@@ -171,5 +171,5 @@ class GameController:
             c2.has_reset = False
             estimated_cost = c.grid.estimate_remaining_cost(
                 c.goal.pos, c.player.pos)
-            c.agent.open.put(Node(c.player.pos, None, 0, estimated_cost, 0, c.agent.selected))
+            c.agent.open.put(Node(c.player.pos, None, 0, estimated_cost, 0, 5, c.agent.selected))
             c.player.reset_trail(c.grid.pos_to_coords(c.player.pos))
