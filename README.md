@@ -51,12 +51,10 @@ All clicks must be done on a grid cell
 
 ## Improvements that can be made
 
-1. Add superclass for hex grid and square grid
-2. Have the agent use the nodes that hex grid and square grid uses instead of it's own node class
-3. Package all simulation files into one file, allowing one to switch between them
-4. Write docstrings and comments
-5. Include option to switch heuristic from straight line distance to manhattan distance
-6. Include iterative deepening pathfinding algorithm
-7. Rekey keyboard controls to make more sense
-8. status of toggles in GUI
-9. Create clickable buttons for all keyboard options
+1. Have the agent use the nodes that hex grid and square grid uses instead of it's own node class
+2. Package all simulation files into one file, allowing one to switch between them
+3. Write docstrings and comments
+4. Include option to switch heuristic from straight line distance to manhattan distance
+5. Rekey keyboard controls to make more sense
+6. status of toggles in GUI
+7. Create clickable buttons for all keyboard options

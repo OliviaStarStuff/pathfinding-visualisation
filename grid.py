@@ -112,7 +112,6 @@ class Grid(ABC):
     def draw_trail(self, screen, pos):
         pass
 
-
 class Hex(Vector3):
     def __init__(self, pos, size, colour: Color, parent_pos=None) -> None:
         super().__init__(pos)
@@ -143,7 +142,6 @@ class Hex(Vector3):
         for i in range(6):
             points.append(unitVector.rotate_rad(i*pi/3))
         return points
-
 
 class HexGrid(Grid):
     def __init__(self, cell_num: Vector2, center: Vector2,
